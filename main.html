@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <header class="hero">
+        <h1>Welcome to the Main Page</h1>
+        <p class="subtitle">This is the main HTML file for the CV project.</p>
+        <div class="actions">
+            <a href="templates/TemplateFile" class="btn btn-primary">View Template</a>
+            <a href="#features" class="btn btn-secondary">Learn More</a>
+            <a href="#user-data" class="btn btn-secondary">Manage User Data</a>
+            <a href="#pdf-export" class="btn btn-secondary">Export to PDF</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="features" class="features">
+            <h2>Project Overview</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>Template</h3>
+                    <p>The reusable hello-world template lives in the <code>templates/</code> folder.</p>
+                </div>
+                <div class="card">
+                    <h3>Main Page</h3>
+                    <p>This page is the primary entry point, styled by <code>main.css</code>.</p>
+                </div>
+                <div class="card">
+                    <h3>Styling</h3>
+                    <p>Separate CSS keeps the main layout and the template style independent.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="user-data" class="features">
+            <h2>User Data Management</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>Create User Profile</h3>
+                    <p>Create and manage user profiles for CV data.</p>
+                    <button onclick="showCreateUserForm()">Create User</button>
+                </div>
+                <div class="card">
+                    <h3>View User Data</h3>
+                    <p>Browse existing user profiles and their data.</p>
+                    <button onclick="viewUsers()">View Users</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="pdf-export" class="features">
+            <h2>PDF Export</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>Select Template</h3>
+                    <p>Choose from available templates for your CV.</p>
+                    <select id="templateSelect">
+                        <option value="">Select a template</option>
+                    </select>
+                </div>
+                <div class="card">
+                    <h3>Choose Data Fields</h3>
+                    <p>Select which data fields to include in the PDF.</p>
+                    <div id="fieldSelection"></div>
+                </div>
+                <div class="card">
+                    <h3>Generate PDF</h3>
+                    <p>Export your CV as a PDF document.</p>
+                    <button onclick="generatePDF()">Generate PDF</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 CV Project. Built with plain HTML &amp; CSS.</p>
+    </footer>
+
+    <script>
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTemplates();
+        });
+
+        // Load available templates
+        function loadTemplates() {
+            const select = document.getElementById('templateSelect');
+            
+            fetch('/api/templates')
+                .then(response => response.json())
+                .then(templates => {
+                    templates.forEach(template => {
+                        const option = document.createElement('option');
+                        option.value = template;
+                        option.textContent = template;
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading templates:', error);
+                });
+        }
+
+        // Show user creation form
+        function showCreateUserForm() {
+            alert('User creation form would appear here in a full implementation');
+        }
+
+        // View existing users
+        function viewUsers() {
+            alert('User viewing interface would appear here in a full implementation');
+        }
+
+        // Generate PDF
+        function generatePDF() {
+            alert('PDF generation would occur here in a full implementation');
+        }
+    </script>
+</body>
+</html>
