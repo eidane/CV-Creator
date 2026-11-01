@@ -11,7 +11,7 @@
         <h1>Welcome to the Main Page</h1>
         <p class="subtitle">This is the main HTML file for the CV project.</p>
         <div class="actions">
-            <a href="templates/TemplateFile.html" class="btn btn-primary">View template file</a>
+            <a href="templates/monogram-resume-template-black.html" class="btn btn-primary">View new template file</a>
             <a href="#features" class="btn btn-secondary">Learn More</a>
             <a href="#user-data" class="btn btn-secondary">Manage User Data</a>
             <a href="#pdf-export" class="btn btn-secondary">Export to PDF</a>
@@ -24,7 +24,12 @@
             <div class="cards">
                 <div class="card">
                     <h3>Template</h3>
-                    <p>The reusable hello-world template lives in the <code>templates/</code> folder.</p>
+                    <p>The reusable resume templates live in the <code>templates/</code> folder.</p>
+                    <p>Currently available templates:</p>
+                    <ul>
+                        <li>monogram-resume-template-black-new.html (Based on monogram-resume-template-black.pdf)</li>
+                        <li>TemplateFile.html (Original template)</li>
+                    </ul>
                 </div>
                 <div class="card">
                     <h3>Main Page</h3>
@@ -61,6 +66,8 @@
                     <p>Choose from available templates for your CV.</p>
                     <select id="templateSelect">
                         <option value="">Select a template</option>
+                        <option value="monogram-resume-template-black.html">Monogram Resume Template - Black</option>
+                        <option value="TemplateFile.html">Original Template</option>
                     </select>
                 </div>
                 <div class="card">
@@ -84,27 +91,9 @@
     <script>
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
-            loadTemplates();
+            // In a real implementation, we would load templates from the server
+            // For now, we're using the hardcoded options above
         });
-
-        // Load available templates
-        function loadTemplates() {
-            const select = document.getElementById('templateSelect');
-            
-            fetch('/api/templates')
-                .then(response => response.json())
-                .then(templates => {
-                    templates.forEach(template => {
-                        const option = document.createElement('option');
-                        option.value = template;
-                        option.textContent = template;
-                        select.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error loading templates:', error);
-                });
-        }
 
         // Show user creation form
         function showCreateUserForm() {
@@ -118,7 +107,13 @@
 
         // Generate PDF
         function generatePDF() {
-            alert('PDF generation would occur here in a full implementation');
+            const selectedTemplate = document.getElementById('templateSelect').value;
+            if (!selectedTemplate) {
+                alert('Please select a template first');
+                return;
+            }
+            
+            alert(`PDF generation would occur here with template: ${selectedTemplate}\n\nIn a full implementation, this would process the selected template with user data and generate a downloadable PDF.`);
         }
     </script>
 </body>
