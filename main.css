@@ -116,6 +116,51 @@ body {
     font-size: 0.9em;
 }
 
+/* ===== Profile Editor ===== */
+.profile-editor {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f7f9fc;
+    border: 1px solid #e3e9f2;
+    border-radius: 12px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.skill-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.skill-item input[type="checkbox"] {
+    margin-right: 8px;
+}
+
 /* ===== Footer ===== */
 .footer {
     text-align: center;
