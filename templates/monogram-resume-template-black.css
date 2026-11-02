@@ -16,10 +16,15 @@ body {
         }
         
         .header {
-            text-align: center;
+            text-align: left;
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 2px solid #000;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+        }
+        .profile-image {
+            text-align:end;
         }
         
         .name {

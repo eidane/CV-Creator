@@ -1,4 +1,6 @@
 // User Profile Manager for CV Project
+// TODO we do only have one user with a base data sett that is not editable, but used for explaining what to fill in to the data for the user. Alter this file to reflect that
+// TODO We also have not implemented this properly to main file. so that will have to be done
 class UserProfileManager {
     constructor() {
         this.userDataPath = 'userData';

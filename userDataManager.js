@@ -1,4 +1,6 @@
 // User Data Manager for CV Project
+const fs = require('fs');
+const path = require('path');
 class UserDataManager {
     constructor() {
         this.userDataPath = 'userData';
@@ -7,8 +9,7 @@ class UserDataManager {
 
     // Create a new user profile
     createUserProfile(userId, userData) {
-        const fs = require('fs');
-        const path = require('path');
+        
         
         try {
             const userDir = path.join(this.userDataPath, userId);
@@ -26,8 +27,6 @@ class UserDataManager {
 
     // Get user profile data
     getUserProfile(userId) {
-        const fs = require('fs');
-        const path = require('path');
         
         try {
             const userDataFile = path.join(this.userDataPath, userId, 'profile.json');
@@ -44,8 +43,6 @@ class UserDataManager {
 
     // Get all users
     getAllUsers() {
-        const fs = require('fs');
-        const path = require('path');
         
         try {
             if (!fs.existsSync(this.userDataPath)) {
@@ -64,8 +61,6 @@ class UserDataManager {
 
     // Process template with user data
     processTemplate(templateName, userData) {
-        const fs = require('fs');
-        const path = require('path');
         
         try {
             const templatePath = path.join(this.templatesPath, templateName);
@@ -91,8 +86,6 @@ class UserDataManager {
 
     // Get available templates
     getAvailableTemplates() {
-        const fs = require('fs');
-        const path = require('path');
         
         try {
             if (!fs.existsSync(this.templatesPath)) {
