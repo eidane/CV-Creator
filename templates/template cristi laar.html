@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kristi Laar - Registered Nurse</title>
+    <style>
+        /* General Reset and Typography */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9; /* Light background */
+        }
+
+        /* Main Container - Limits width for print readability */
+        .cv-container {
+            max-width: 850px;
+            margin: auto;
+            padding: 30px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+        }
+
+        /* Header Section (Name and Title) */
+        header {
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #333;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+            margin: 0;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: #555;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Contact Information */
+        .contact-info {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+            padding: 10px 0;
+        }
+
+        .contact-detail p {
+            margin: 4px 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Section Styling */
+        section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            display: block;
+            font-size: 18px;
+            color: #004d99; /* Primary professional color */
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 3px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        /* Experience and Education Listings (The Core Content) */
+        .job-entry, .education-entry {
+            margin-bottom: 20px;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+
+        .job-role strong {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .job-company {
+            display: block;
+            font-style: italic;
+            margin-top: 2px;
+            color: #555;
+        }
+        
+        /* Dates and Location Styling */
+        .date-location {
+             font-size: 14px;
+             color: #777;
+             flex-shrink: 0; /* Prevent shrinking on flex layout */
+        }
+
+        .job-details p {
+            margin: 5px 0 10px 0;
+            padding-left: 10px;
+            border-left: 3px solid #eee;
+        }
+
+        /* Skills/Qualities Sections (Communication, Leadership) */
+        .qualities-section {
+            display: flex;
+            gap: 40px; /* Space between the two quality columns */
+            margin-top: -25px; /* Pull content up to fill space left by job structure */
+            padding: 0 10px;
+        }
+
+        .quality-block {
+            flex: 1;
+            max-width: 48%;
+            padding-right: 20px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        /* Specific handling for the "Communication" and "Leadership" text blocks */
+        .quality-block p {
+             margin-top: 5px;
+             font-size: 14px;
+        }
+
+        /* Reference Footer */
+        footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+            margin-top: 30px;
+            font-style: italic;
+            color: #777;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+             .contact-info {
+                 flex-direction: column;
+                 gap: 15px;
+             }
+             .quality-block {
+                 max-width: 100%;
+                 padding-right: 0;
+                 border-bottom: none;
+             }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="cv-container">
+        <!-- HEADER -->
+        <header>
+            <h1>KRISTI LAAR</h1>
+            <p class="subtitle">REGISTERED NURSE</p>
+        </header>
+
+        <!-- CONTACT INFO -->
+        <div class="contact-info">
+            <div class="contact-detail">
+                <strong>Address:</strong> 111 1st Avenue, Redmond, WA 65432
+            </div>
+            <div class="contact-detail">
+                <strong>Phone:</strong> 909.555.0100
+            </div>
+             <div class="contact-detail">
+                <strong>Email:</strong> kristi@example.com<br>
+                <strong>Website:</strong> www.interestingsite.com
+            </div>
+        </div>
+
+        <!-- QUALITIES (Communication & Leadership) -->
+        <section id="qualities">
+            <div class="quality-block" id="communication">
+                <span class="section-title" style="border-bottom: none;">COMMUNICATION</span>
+                <p>I have received several awards for my outstanding communication skills, including recognition for providing exceptional patient education and counseling.</p>
+            </div>
+
+            <div class="quality-block" id="leadership">
+                <span class="section-title" style="border-bottom: none;">LEADERSHIP</span>
+                <p>I received the "Outstanding Nursing Student" award during my time in nursing school, and I have been recognized for my contributions to patient safety and satisfaction in my current role.</p>
+            </div>
+        </section>
+
+        <!-- EDUCATION -->
+        <section id="education">
+            <span class="section-title">EDUCATION</span>
+            <div class="education-entry">
+                <strong>Bellows College</strong> | Madison, WI <br>
+                <em>Bachelors of Science in Nursing</em>
+                <p style="margin-top: 10px;">Relevant coursework: Anatomy and physiology, pharmacology, nursing ethics, and patient care management.</p>
+            </div>
+        </section>
+
+        <!-- EXPERIENCE -->
+        <section id="experience">
+             <span class="section-title">EXPERIENCE</span>
+
+            <!-- Job Entry 1 -->
+            <div class="job-entry">
+                <div class="job-header">
+                    <div style="flex: 2;"><strong>Registered Nurse | Pediatrics</strong></div>
+                    <div class="date-location">November 20XX – October 20XX</div>
+                </div>
+                <p class="job-company">Wholeness Healthcare</p>
+            </div>
+
+            <!-- Job Entry 2 -->
+            <div class="job-entry">
+                <div class="job-header">
+                    <div style="flex: 2;"><strong>Registered Nurse | General Practice</strong></div>
+                    <div class="date-location">December 20XX – November 20XX</div>
+                </div>
+                <p class="job-company">Wholeness Healthcare</p>
+            </div>
+
+             <!-- Job Entry 3 -->
+            <div class="job-entry">
+                <div class="job-header">
+                    <div style="flex: 2;"><strong>Registered Nurse | General Practice</strong></div>
+                    <div class="date-location">September 20XX – August 20XX</div>
+                </div>
+                <p class="job-company">Tyler Stein MD</p>
+            </div>
+
+             <!-- Summary Statement -->
+            <div class="job-details" style="margin-top: 15px;">
+                <p>I have a proven track record of delivering high-quality care while maintaining patient safety and satisfaction.</p>
+            </div>
+        </section>
+
+         <!-- REFERENCES -->
+        <section id="references">
+            <span class="section-title">REFERENCES</span>
+             <div class="job-entry" style="margin-bottom: 0;">
+                <p style="font-size: 16px; margin-top: 5px;">[Available upon request]</p>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            &copy; 2024 Kristi Laar
+        </footer>
+    </div>
+</body>
+</html>
