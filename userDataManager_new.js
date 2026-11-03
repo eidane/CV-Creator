@@ -15,7 +15,7 @@ class UserDataManager {
                 userProfiles[userId] = userData;
                 localStorage.setItem('userProfiles', JSON.stringify(userProfiles));
                 
-                return { success: true, message: 'User profile created successfully' };
+                return { success: true, message: 'CV Profile created successfully' };
             } else {
                 return { success: false, message: 'User already exists' };
             }

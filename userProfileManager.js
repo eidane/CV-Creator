@@ -105,6 +105,24 @@ class UserProfileManager {
             additionalSkills: []
         };
     }
+    
+    // Create a new CV profile with headline and other fields
+    async createCVProfile(userId, profileData) {
+        try {
+            // Ensure we have all required fields including headline
+            const fullProfile = {
+                ...this.getDefaultProfile(),
+                ...profileData,
+                profileName: profileData.profileName || "",
+                headline: profileData.headline || ""
+            };
+            
+            return await this.saveUserProfile(userId, fullProfile);
+        } catch (error) {
+            console.error('Error creating CV profile:', error);
+            return false;
+        }
+    }
 }
 
 // Export the class for use in other modules
