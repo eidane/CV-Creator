@@ -3,158 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kristi Laar - Registered Nurse</title>
-    <style>
-        /* Global Styling & Reset */
-        body {
-            font-family: 'Times New Roman', Georgia, serif; 
-            line-height: 1.6; /* Increased line height for better readability */
-            margin: 0; 
-            padding: 45px 25px; /* *** INCREASED OUTER BODY PADDING *** */
-            background-color: #f9f9f9; /* Light background color around the document */
-        }
-
-        /* Main Container - Defines the "page" area with internal borders/padding */
-        .cv-container {
-            display: flex;
-            max-width: 1050px;
-            margin: auto;
-            background-color: #fff;
-            padding: 35px 40px; /* Increased inner padding to reduce "squished" feeling */
-            border: 1px solid #ddd; /* Outer border for the "page" look */
-        }
-
-        /* ======================= */
-        /* COLUMN 1: SIDEBAR (LEFT - Photo, Contact & Details) */
-        /* ======================= */
-        .sidebar {
-            width: 30%; 
-            padding-right: 40px; 
-        }
-
-        /* Photo Placeholder Styling */
-        .profile-image {
-            width: 120px; /* Fixed size as requested */
-            height: 120px;
-            border-radius: 5px; 
-            background-color: #ccc; 
-            margin-bottom: 30px;
-        }
-
-        /* Contact Info Block */
-        .contact-info h2 {
-             font-size: 14px;
-            color: #3c68b9; /* Professional Blue */
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
-            margin-top: 20px;
-            text-transform: uppercase;
-        }
-
-        .contact-detail {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 18px; /* Increased vertical spacing */
-        }
-
-        .contact-label {
-            font-size: 14px;
-            color: #555; 
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 3px;
-        }
-
-        .contact-value {
-            font-size: 16px;
-            color: #333;
-            font-weight: normal;
-        }
-
-        /* ======================= */
-        /* COLUMN 2: MAIN CONTENT (NAME, PROFESSIONAL HISTORY) */
-        /* ======================= */
-        .main-content {
-            width: 70%; 
-            padding-left: 50px; /* Increased padding for more white space */
-        }
-
-        /* Main Header/Name Block */
-        header {
-            border-bottom: 3px solid #1e3a8a;
-            padding-bottom: 5px;
-            margin-bottom: 30px; /* Significant spacing after name block */
-        }
-
-        h1 {
-            font-size: 36px;
-            color: #1e3a8a; 
-            letter-spacing: 2px;
-        }
-
-        .subtitle {
-            font-size: 20px;
-            color: #555;
-            margin-top: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* --- Section Title Style --- */
-        .section-title {
-            display: block;
-            font-size: 20px;
-            color: #1e3a8a;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 5px;
-            margin-bottom: 25px; /* Increased spacing before section content */
-            text-transform: uppercase;
-        }
-
-        /* ======================= */
-        /* PROFESSIONAL EXPERIENCE & EDUCATION STYLING */
-        /* ======================= */
-        .job-entry, .education-entry {
-            margin-bottom: 30px; /* Increased spacing between major entries */
-        }
-
-        .job-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 3px;
-        }
-
-        .job-role strong {
-            font-size: 17px;
-            color: #333;
-        }
-
-        .job-company {
-            display: block;
-            font-style: italic;
-            margin-top: 2px;
-            color: #555;
-        }
-
-        /* ======================= */
-        /* CORE SKILLS AND SUMMARY DETAIL STYLING (In the sidebar) */
-        /* ======================= */
-        .summary-section h2, .skills-section h2 {
-             font-size: 18px;
-            color: #1e3a8a;
-            border-bottom: 2px solid #1e3a8a;
-            padding-bottom: 5px;
-            margin-top: 20px; 
-        }
-
-        /* Making the sidebar look like it has its own background color */
-        .sidebar {
-            background-color: #f9fbff; /* Subtle light blue/gray background for definition */
-        }
-
-
-    </style>
+    <title>Template-cristi-laar</title>
+    <link rel="stylesheet" href="template-cristi-laar.css">
 </head>
 <body onload="window.scrollTo(0,0)">
     <div class="cv-container">
@@ -165,37 +15,37 @@
         <aside class="sidebar">
             
              <!-- Image Placeholder (TOP LEFT CORNER) -->
-            <img src="stockfootage.png" alt="Profile Picture" class="profile-image" title="Placeholder for Photo">
+            <img src="../userData/sample-user/profile-img.png" alt="Profile Picture" class="profile-image" title="Placeholder for Photo">
 
             <!-- Contact Info Block -->
             <div class="contact-info">
                 <h2>CONTACT</h2>
 
                 <div class="contact-detail">
-                    <span class="contact-label">Address</span>
-                    <span class="contact-value">111 1st Avenue, Redmond, WA 65432</span>
+                    <span class="contact-label">Adresse</span>
+                    <span class="contact-value"></span>
                 </div>
 
                 <div class="contact-detail">
-                    <span class="contact-label">Phone</span>
-                    <span class="contact-value">909.555.0100</span>
+                    <span class="contact-label">Telefon</span>
+                    <span class="contact-value">000 00 000</span>
                 </div>
                 
                 <div class="contact-detail">
-                    <span class="contact-label">Email</span>
-                    <span class="contact-value">kristi@example.com</span>
+                    <span class="contact-label">Epost</span>
+                    <span class="contact-value">ola.norman@mailinator.com</span>
                 </div>
 
                 <div class="contact-detail">
-                    <span class="contact-label">Website</span>
-                    <span class="contact-value">www.interestingsite.com</span>
+                    <span class="contact-label">Github</span>
+                    <span class="contact-value"><a href="www.github.com/eidane">www.github.com</a></span>
                 </div>
             </div>
 
 
             <!-- KEY SKILLS AND QUALIFICATIONS (Moved from Main Content) -->
              <section class="summary-skills">
-                <h2>KEY QUALITIES</h2>
+                <h2>Nøkkel erfaring</h2>
 
                 <h4>Communication</h4>
                 <ul>
@@ -218,19 +68,19 @@
 
             <!-- HEADER/NAME BLOCK - Top Right Corner -->
             <header>
-                <h1>KRISTI LAAR</h1>
-                <p class="subtitle">REGISTERED NURSE</p>
+                <h1>Ola Nordman</h1>
+                <p class="subtitle">Leder</p>
             </header>
 
 
             <!-- EXPERIENCE SECTION (Main Roles) -->
             <section id="experience">
-                <span class="section-title">PROFESSIONAL EXPERIENCE</span>
+                <span class="section-title">Arbeid</span>
 
                 <!-- Job Entry 1: RN Pediatrics -->
                 <div class="job-entry">
                     <div class="job-header">
-                        <div style="flex: 2;"><strong>Registered Nurse | Pediatrics</strong></div>
+                        <div style="flex: 2;"><strong>Senior Project Manager</strong></div>
                         <div class="date-location">November 20XX – October 20XX</div >
                     </div>
                     <p class="job-company">Wholeness Healthcare</p>
@@ -282,7 +132,7 @@
 
     </div >
     <footer style="width: 100%; display: block; text-align: center;">
-        &copy; 2024 Kristi Laar CV Template
+        &copy; 2026 Eidane CV Template
     </footer>
 </body>
 </html>

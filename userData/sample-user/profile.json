@@ -1,52 +1,76 @@
+
 {
   "name": "Ola Norman",
   "phone": "000 00 000",
   "email": "ola.norman@mailinator.com",
-  "address": "Hagaskogvegen 11G, 2150 Årnes",
+  "address": "Industrivegen 20, 2069 Jessheim",
   "keyCompetencies": [
-    "Project Management",
-    "Team Leadership",
-    "Communication Skills",
-    "Problem Solving"
+    "Fullstack Development (React, Angular, Node.js)",
+    "Agile Methodologies & Scrum",
+    "Database Design and Administration (SQL, NoSQL)",
+    "Problem Solving & Troubleshooting",
+    "DevOps Practices & Server Management"
   ],
-  "summary": "Experienced professional with a strong background in project management and team leadership. Passionate about delivering quality results and fostering collaborative environments.",
+  "summary": "Results-oriented Fullstack Developer with over 8 years of experience transforming complex user requirements into functional, scalable systems. Expert in both front-end implementation (React/Angular) and back-end architecture (Node.js, Python). Possesses a natural analytical sense for troubleshooting and risk management in production environments, trained to work under strict operational reliability demands. Proven ability to quickly master new technologies.",
   "workExperience": [
     {
-      "jobTitle": "Senior Project Manager",
-      "company": "ABC Corporation",
-      "startDate": "2018-01",
-      "endDate": "2023-06",
-      "description": "Led cross-functional teams to deliver projects on time and within budget. Implemented agile methodologies that improved team productivity by 30%."
+      "jobTitle": "Fullstack Developer",
+      "company": "n/a",
+      "startDate": "20xx-10",
+      "endDate": "20xx-08",
+      "description": "Provided support for daily operational setup and issues. Utilized DevOps and Agile methodologies to deliver high-priority solutions quickly. Technologies used: JavaScript with NodeJS, Angular, RXJS. Database: MongoDB."
     },
     {
-      "jobTitle": "Project Coordinator",
-      "company": "XYZ Solutions",
-      "startDate": "2015-03",
-      "endDate": "2017-12",
-      "description": "Coordinated project activities and maintained project documentation. Facilitated meetings and ensured effective communication between stakeholders."
+      "jobTitle": "Programmer (Data)",
+      "company": "tantec",
+      "startDate": "2017-10",
+      "endDate": "2021-10",
+      "description": "Developed the Pega management solution. Provided support and executed updates to local servers, assisting with connecting new units and setting up new branches/locations. Technologies used: Python, PostgreSQL, JavaScript, HTML."
+    },
+    {
+      "jobTitle": "Test Technician Electronics",
+      "company": "Zocom",
+      "startDate": "2026-07",
+      "endDate": "2026-10",
+      "description": "Tested TV for satellite reception across the Nordic region, ensuring functionality and maintaining required quality standards."
+    },
+    {
+      "jobTitle": "Store Employee",
+      "company": "Håvar Torsvik Rema 1000 / Rema 1000 Kanalveien",
+      "startDate": "2013-07",
+      "endDate": "2017-10",
+      "description": "Managed store operations, including restocking goods, receiving and processing customer orders, customer service, and managing cash registers (Låse ansvarlig)."
     }
   ],
   "education": [
     {
-      "degree": "Master of Business Administration",
-      "institution": "University of Oslo",
-      "startDate": "2013-09",
-      "endDate": "2015-06",
-      "description": "Specialized in Strategic Management and Organizational Leadership."
+      "degree": "Bachelor in Applied Data Technology",
+      "institution": "Høgskolen i Oslo Akershus",
+      "startDate": "2013-08",
+      "endDate": "2017-01",
+      "description": "Focused studies on applied data technology."
     },
     {
-      "degree": "Bachelor of Science in Computer Science",
-      "institution": "Norwegian University of Science and Technology",
-      "startDate": "2009-09",
-      "endDate": "2013-06",
-      "description": "Focus on software engineering and database systems."
+      "degree": "V.G. 3 Completion (General Studies)",
+      "institution": "Sørumsand videregående skole",
+      "startDate": "2010-08",
+      "endDate": "2011-06",
+      "description": "Completed upper secondary school studies."
+    },
+    {
+      "degree": "V.G. 2 Production Industry Technology",
+      "institution": "Sørumsand videregående skole",
+      "startDate": "2009-08",
+      "endDate": "2010-06",
+      "description": "Completed secondary school studies."
     }
   ],
   "additionalSkills": [
-    "Leadership",
-    "Strategic Planning",
-    "Budget Management",
-    "Risk Assessment",
-    "Stakeholder Management"
+    "Languages: Norwegian (Bokmål), English (Good written and spoken)",
+    "Technical Stack Expertise: JavaScript, TypeScript, Angular, Node.js, Python, REST APIs, HTML5/CSS3",
+    "Databases: MongoDB (NoSQL), PostgreSQL, MySQL, SQLite, Database Normalization & Architecture.",
+    "DevOps/OS: Linux (Ubuntu, Mint), Windows PowerShell, Server Administration, Apache Webserver.",
+    "Methodologies: Agile Scrum, Rapid Prototyping, System Integration, Cloud Infrastructure (VPN).",
+    "Physical Skills: Welding and Machining."
   ]
 }
