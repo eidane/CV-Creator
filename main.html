@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page</title>
     <link rel="stylesheet" href="main.css">
-    <link src="userDataManager.js">
-    <link src="userProfileManager.js">
+    <script src="profileDataManager_new.js"></script>
+    <script src="ProfileManager.js"></script>
 </head>
 <body>
     <header class="main">
@@ -61,16 +61,7 @@
             </div>
         </section>
 
-        <!-- User Profile Editing Section -->
-        <div id="userProfileEditor" class="profile-editor" 
-        style="display: none; margin-top: 20px; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
-            <h3>Edit User Profile</h3>
-            <div id="profileForm">
-                <!-- Profile fields will be populated here -->
-            </div>
-            <button onclick="saveProfile()" class="btn btn-primary">Save Profile</button>
-            <button onclick="cancelEdit()" class="btn btn-secondary">Cancel</button>
-        </div>
+       
         
         <section id="pdf-export" class="features">
             <h2>PDF Export</h2>
@@ -107,16 +98,21 @@
         document.addEventListener('DOMContentLoaded', function() {
             // In a real implementation, we would load templates from the server
             // For now, we're using the hardcoded options above
+            
+            // Initialize the application
+            initializeApp();
         });
 
         // Show user creation form
         function showCreateUserForm() {
-            alert('User creation form would appear here in a full implementation');
+            // Redirect to profile manager page where users can create profiles
+            window.location.href = 'profile-manager.html';
         }
 
         // View existing profiles
         function viewProfiles() {
-            alert('Profile viewing interface would appear here in a full implementation');
+            // Redirect to profile manager page where users can view and edit profiles
+            window.location.href = 'profile-manager.html';
         }
 
         // Generate PDF
@@ -155,62 +151,7 @@
                 console.error('Error initializing app:', error);
             }
         }
-
-        // Load profile editor for a specific user
-        async function loadProfileEditor(userId) {
-            try {
-                const userProfileManager = new UserProfileManager();
-                const profile = await userProfileManager.loadUserProfile(userId);
-                
-                currentUser = userId;
-                
-                // Display the profile form (simplified)
-                const profileForm = document.getElementById('profileForm');
-                profileForm.innerHTML = `
-                    <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" value="${profile.name || ''}">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" value="${profile.email || ''}">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone:</label>
-                        <input type="text" id="phone" value="${profile.phone || ''}">
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address:</label>
-                        <input type="text" id="address" value="${profile.address || ''}">
-                    </div>
-                    <div class="form-group">
-                        <label for="summary">Summary:</label>
-                        <textarea id="summary">${profile.summary || ''}</textarea>
-                    </div>
-                `;
-                
-                // Show the editor
-                document.getElementById('userProfileEditor').style.display = 'block';
-                
-            } catch (error) {
-                console.error('Error loading profile editor:', error);
-            }
-        }
-
-        // Save current profile
-        async function saveProfile() {
-            try {
-                alert('Profile would be saved in a full implementation. This is a simplified version for demonstration.');
-            } catch (error) {
-                console.error('Error saving profile:', error);
-                alert('Error saving profile');
-            }
-        }
-
-        // Cancel editing
-        function cancelEdit() {
-            document.getElementById('userProfileEditor').style.display = 'none';
-        }
+      
     </script>
 </body>
 </html>

@@ -54,10 +54,8 @@ The `userDataManager.js` file provides:
 3. View existing users
 4. Select a template and generate PDF output
 
-Note: This is a frontend demonstration. In a production environment, you would need:
-- A backend server for full file system access
-- PDF generation libraries (like jsPDF)
-- More robust data persistence mechanisms
+Note: This is a frontend aplication, but do use python to store data localy. System requires:
+- python 3 or newer
 
 # TODO
 
@@ -65,7 +63,7 @@ good. Next will be to start filling out a basic userdata example to be of use as
 
 I understand you're looking to create a more comprehensive solution with better template management that allows users to easily create, preview, and export templates. Let me think through this step by step.
 
-Based on your requirements:
+Based on requirements:
 
 1. Need easy-to-read templates
 2. Should support previews

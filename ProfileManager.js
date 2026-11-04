@@ -31,18 +31,20 @@ class UserProfileManager {
 
     // Save user profile to JSON file
     async saveUserProfile(userId, userData) {
+        console.log('Saving user profile for userId:', userId);
         try {
+            console.log('Saving user profile for userId:', userId);
             const fs = require('fs');
             const path = require('path');
             
             const userDir = path.join(this.userDataPath, userId);
             const profilePath = path.join(userDir, this.profileFileName);
-            
+            console.log('Profile path:', profilePath);
             // Create user directory if it doesn't exist
             if (!fs.existsSync(userDir)) {
                 fs.mkdirSync(userDir, { recursive: true });
             }
-            
+            console.log('User directory ensured:', userDir);
             // Write profile data to file
             fs.writeFileSync(profilePath, JSON.stringify(userData, null, 2));
             return true;
@@ -120,6 +122,72 @@ class UserProfileManager {
             return await this.saveUserProfile(userId, fullProfile);
         } catch (error) {
             console.error('Error creating CV profile:', error);
+            return false;
+        }
+    }
+
+    // Add a work experience entry
+    async addWorkExperience(userId, experienceData) {
+        try {
+            const userProfile = await this.loadUserProfile(userId);
+            
+            if (!userProfile.workExperience) {
+                userProfile.workExperience = [];
+            }
+            
+            userProfile.workExperience.push(experienceData);
+            return await this.saveUserProfile(userId, userProfile);
+        } catch (error) {
+            console.error('Error adding work experience:', error);
+            return false;
+        }
+    }
+
+    // Add an education entry
+    async addEducation(userId, educationData) {
+        try {
+            const userProfile = await this.loadUserProfile(userId);
+            
+            if (!userProfile.education) {
+                userProfile.education = [];
+            }
+            
+            userProfile.education.push(educationData);
+            return await this.saveUserProfile(userId, userProfile);
+        } catch (error) {
+            console.error('Error adding education:', error);
+            return false;
+        }
+    }
+
+    // Remove a work experience entry
+    async removeWorkExperience(userId, index) {
+        try {
+            const userProfile = await this.loadUserProfile(userId);
+            
+            if (userProfile.workExperience && userProfile.workExperience.length > index) {
+                userProfile.workExperience.splice(index, 1);
+                return await this.saveUserProfile(userId, userProfile);
+            }
+            return false;
+        } catch (error) {
+            console.error('Error removing work experience:', error);
+            return false;
+        }
+    }
+
+    // Remove an education entry
+    async removeEducation(userId, index) {
+        try {
+            const userProfile = await this.loadUserProfile(userId);
+            
+            if (userProfile.education && userProfile.education.length > index) {
+                userProfile.education.splice(index, 1);
+                return await this.saveUserProfile(userId, userProfile);
+            }
+            return false;
+        } catch (error) {
+            console.error('Error removing education:', error);
             return false;
         }
     }

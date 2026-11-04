@@ -49,4 +49,4 @@ Both scripts will:
     Update your local version.json.
     Output status messages with colors (in PowerShell) or standard text.
 
-Need help customizing the file list, branch name, or adding features like forced updates or dry-run mode?
+As of now no dryrun or force update is implemented.
