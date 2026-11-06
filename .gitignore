@@ -1,0 +1,67 @@
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+build/
+out/
+dist-electron/
+release/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Caches
+.cache/
+.eslintcache
+.parcel-cache/
+.next/
+.nuxt/
+
+# Packaged Electron apps
+*.deb
+*.rpm
+*.AppImage
+*.snap
+*.dmg
+*.exe
+*.zip
+*.tar.gz
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+database.db
+data.db
+
+# SQLite journals and locks
+*-journal
+*-wal
+*-shm
+
+# Pdf files
+*.pdf

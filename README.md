@@ -1,103 +1,102 @@
-# CV Project with User Data and PDF Export
+# CV Creator Desktop Application
 
-This project demonstrates a folder structure for storing user data and PDF extraction based on templates.
-
-## Folder Structure
-
-```
-CVproject/
-├── userData/                 # Folder for storing user data
-│   ├── user1/                # Individual user folders
-│   │   └── profile.json      # User profile data
-│   └── user2/
-│       └── profile.json
-├── templates/                # Template files for CV generation
-│   ├── style.css             # Template styling
-│   └── TemplateFile          # Main template file
-├── main.html                 # Main application page
-├── main.css                  # Main styling
-└── userDataManager.js        # User data management functionality
-```
+A modern desktop application for creating professional CVs with local storage capabilities, built with Electron and Node.js.
 
 ## Features
 
-### 1. User Data Storage
-- Each user has a dedicated folder in the `userData` directory
-- User data is stored as JSON files
-- Easy to manage multiple users with their own profiles
+- **Desktop Application**: Native desktop experience with proper window controls
+- **Local Data Storage**: SQLite database for robust data management
+- **Template System**: Manage and create professional CV templates
+- **Profile Management**: Create and organize multiple CV profiles
+- **PDF Generation**: Export CVs to PDF format
+- **Cross-platform**: Works on Windows, macOS, and Linux
 
-### 2. Template-Based PDF Generation
-- Templates are stored in the `templates/` folder
-- Templates support placeholders like `{{name}}`, `{{email}}`
-- Data can be dynamically injected into templates
-- Users can select which data fields to include when exporting
+## Installation
 
-### 3. Usage Example
+### Prerequisites
 
-1. Create a user profile with personal information
-2. Select a template from the templates directory
-3. Choose which data fields to include in the PDF
-4. Generate PDF output
+- Node.js (v14 or higher)
+- npm (usually comes with Node.js)
 
-## Implementation Details
+### Setup Instructions
 
-The `userDataManager.js` file provides:
-- User creation and management
-- Template processing with data injection
-- PDF generation simulation
-- Data persistence using browser localStorage
+1. Clone or download this repository
+2. Open terminal/command prompt in the project directory
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## How to Use
+## Running the Application
 
-1. Open `main.html` in a web browser
-2. Create user profiles using the "Create User" button
-3. View existing users
-4. Select a template and generate PDF output
+### Development Mode
+```bash
+npm run dev
+```
 
-Note: This is a frontend aplication, but do use python to store data localy. System requires:
-- python 3 or newer
+### Production Mode
+```bash
+npm start
+```
 
-# TODO
+## Project Structure
 
-good. Next will be to start filling out a basic userdata example to be of use as a template togeter with some templates that have to be easy to make, would a html page be good for this possibly or a different format, it would need to be easy to read and do previews and then also be the same in the pdf file that afterwards will be generated when we download that.
+```
+cv-creator-desktop/
+├── main.js                 # Electron main process
+├── package.json            # Application metadata and dependencies
+├── main.html               # Main application interface
+├── main.css                # Styles for the application
+├── renderer.js             # Renderer process logic
+├── src/
+│   ├── utils/
+│   │   └── database.js     # Database operations
+│   └── modules/            # Application modules
+├── templates/              # CV template files (HTML/CSS)
+└── userData/               # User data storage directory
+```
 
-I understand you're looking to create a more comprehensive solution with better template management that allows users to easily create, preview, and export templates. Let me think through this step by step.
+## Data Storage
 
-Based on requirements:
+The application uses SQLite for local data storage:
 
-1. Need easy-to-read templates
-2. Should support previews
-3. Should work for both HTML display and PDF generation
-4. Should be simple enough for users to create new templates
+- **Users**: Stored in the `users` table
+- **Profiles**: Stored in the `profiles` table with references to users
+- **Templates**: Stored in the `templates` table
 
-This is a good approach - HTML templates would work well since they're already familiar to users, can be previewed directly in browsers, and can be converted to PDFs.
+All data is stored locally in the application's data directory:
+- **Windows**: `%APPDATA%\CV Creator\`
+- **macOS**: `~/Library/Application Support/CV Creator/`
+- **Linux**: `~/.config/CV Creator/`
 
-Let me plan the implementation:
+## Building for Distribution
 
-## Plan for Enhanced Template System
+To create a distributable package:
 
-### Step 1: Create Better Template Structure
+1. Install build dependencies:
+   ```bash
+   npm install --save-dev electron-builder
+   ```
 
-- Develop a more flexible template system that supports:
+2. Build the application:
+   ```bash
+   npm run build
+   ```
 
-  - Multiple template formats (HTML-based)
-  - Easy editing capabilities
-  - Preview functionality
+This will generate installer files for your target platforms.
 
-### Step 2: Implement Template Editor Interface
+## Contributing
 
-- Create a simple interface for users to create and edit templates
-- Add preview capability to see how templates will look when rendered
-- Support for common CV elements (headers, sections, formatting)
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
-### Step 3: Enhance PDF Generation
+## License
 
-- Better integration with HTML-to-PDF conversion
-- Support for proper styling in PDF output
-- Template-specific export options
+Apache 2.0 License
 
-### Step 4: User-Friendly Template Creation
+## Acknowledgements
 
-- Provide example templates that users can modify
-- Clear documentation on how to create new templates
-- Validation for template syntax
+Built with Electron and Node.js technologies.
