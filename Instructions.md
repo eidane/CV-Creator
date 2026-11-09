@@ -55,7 +55,6 @@ Your existing project is a web-based application that:
     {
       "user_id": "uuid",
       "profile_data": "json_object",
-      "template_used": "string",
       "created_at": "datetime",
       "updated_at": "datetime"
     }

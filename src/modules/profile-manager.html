@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Manager</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="../main.css">
     <script src="ProfileManager.js"></script>
 </head>
 <body>
@@ -54,10 +54,12 @@
         // Edit an existing profile
         async function editProfile(profileId) {
             try {
-                const userProfileManager = new UserProfileManager();
+                // Load the actual profile data from database using module
+                const { createProfileManager } = require('./src/modules');
+                const userProfileManager = createProfileManager();
                 const userId = 'sample-user';
                 
-                // Load the actual profile data from file
+                // Load the actual profile data from database
                 const profileData = await userProfileManager.loadUserProfile(userId);
                 currentProfileId = profileId;
                 showProfileEditor(profileData);
@@ -105,7 +107,10 @@
         async function saveProfile() {
             console.log('Saving profile...');
             try {
-                const userProfileManager = new UserProfileManager();
+                // Save to database using module
+                const { createProfileManager } = require('./src/modules');
+                const userProfileManager = createProfileManager();
+                
                 const userId = 'sample-user';
                 console.log('User ID for saving profile:', userId);
                 // Collect form data
@@ -117,29 +122,16 @@
                     summary: document.getElementById('summary').value
                 };
                 
-                // In a real implementation, this would call the Python script or backend API
-                // For now, we'll simulate it by creating a downloadable JSON file
-                
-                // Create a downloadable JSON file
-                const blob = new Blob([JSON.stringify(profileData, null, 2)], {type: 'application/json'});
-                const url = URL.createObjectURL(blob);
-                
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `profile-sample-user.json`;
-                document.body.appendChild(a);
-                a.click();
-                
-                // Clean up
-                setTimeout(() => {
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                }, 100);
-                
-                alert('Profile saved successfully! A JSON file has been downloaded to your computer.');
-                
-                // Return to profile list view
-                cancelEdit();
+                // Save to database using the manager
+                const success = await userProfileManager.saveUserProfile(userId, profileData);
+                if (success) {
+                    alert('Profile saved successfully!');
+                    // Return to profile list view
+                    cancelEdit();
+                    loadProfiles(); // Reload profiles to show updated data
+                } else {
+                    alert('Error saving profile');
+                }
             } catch (error) {
                 console.error('Error saving profile:', error);
                 alert('Error saving profile', error);

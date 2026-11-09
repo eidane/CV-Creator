@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs-extra');
+const Database = require('./src/utils/database');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -8,6 +9,7 @@ if (require('electron-squirrel-startup')) {
 }
 
 let mainWindow;
+let database;
 
 const createWindow = () => {
   // Create the browser window.
@@ -22,6 +24,9 @@ const createWindow = () => {
     icon: path.join(__dirname, 'icon.png')
   });
 
+  // Initialize database
+  database = new Database();
+  
   // Load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'main.html'));
 
@@ -65,3 +70,6 @@ ipcMain.handle('get-app-path', () => {
 ipcMain.handle('get-user-data-path', () => {
   return app.getPath('userData');
 });
+
+// Export database instance for use in other modules
+module.exports = { database };
