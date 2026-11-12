@@ -23,11 +23,14 @@ const createWindow = () => {
     },
     icon: path.join(__dirname, 'icon.png')
   });
-
+  console.log("init database");
+  
   // Initialize database
   database = new Database();
   
   // Load the index.html of the app.
+  console.log("loading file");
+  
   mainWindow.loadFile(path.join(__dirname, 'main.html'));
 
   // Open the DevTools.
@@ -43,7 +46,10 @@ const createWindow = () => {
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
-app.on('ready', createWindow);
+app.on('ready', () => {
+  console.log("Electron is ready");
+  createWindow();
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {

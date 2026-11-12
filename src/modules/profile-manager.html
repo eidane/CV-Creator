@@ -107,9 +107,10 @@
         async function saveProfile() {
             console.log('Saving profile...');
             try {
+                console.log('Saving profile try...');
                 // Save to database using module
-                const { createProfileManager } = require('./src/modules');
-                const userProfileManager = createProfileManager();
+                const { UserProfileManager } = require('./src/modules');
+                const userProfileManager = new UserProfileManager();
                 
                 const userId = 'sample-user';
                 console.log('User ID for saving profile:', userId);
@@ -130,13 +131,109 @@
                     cancelEdit();
                     loadProfiles(); // Reload profiles to show updated data
                 } else {
-                    alert('Error saving profile');
+                    alert('Error saving profile...');
                 }
             } catch (error) {
                 console.error('Error saving profile:', error);
                 alert('Error saving profile', error);
             }
         }
+        async function saveEducation(params) {
+            console.log('Saving education...');
+            try {
+                console.log('Saving education try...');
+                // Save to database using module
+                const { UserProfileManager } = require('./src/modules');
+                const userProfileManager = new UserProfileManager();
+                
+                const userId = 'sample-user';
+                console.log('User ID for saving education:', userId);
+                // Collect form data
+                const educationData = {
+                    degree: document.getElementById('degree').value,
+                    institution: document.getElementById('institution').value,
+                    year: document.getElementById('year').value
+                };
+                
+                // Save to database using the manager
+                const success = await userProfileManager.saveUserEducation(userId, educationData);
+                if (success) {
+                    alert('Education saved successfully!');
+                    // Return to profile list view
+                    cancelEdit();
+                    loadProfiles(); // Reload profiles to show updated data
+                } else {
+                    alert('Error saving education...');
+                }
+            } catch (error) {
+                console.error('Error saving education:', error);
+                alert('Error saving education', error);
+            }
+        }
+        async function saveExperience(params) {
+            console.log('Saving experience...');
+            try {
+                console.log('Saving experience try...');
+                // Save to database using module
+                const { UserProfileManager } = require('./src/modules');
+                const userProfileManager = new UserProfileManager();
+                
+                const userId = 'sample-user';
+                console.log('User ID for saving experience:', userId);
+                // Collect form data
+                const experienceData = {
+                    title: document.getElementById('title').value,
+                    company: document.getElementById('company').value,
+                    years: document.getElementById('years').value
+                };
+                
+                // Save to database using the manager
+                const success = await userProfileManager.saveUserExperience(userId, experienceData);
+                if (success) {
+                    alert('Experience saved successfully!');
+                    // Return to profile list view
+                    cancelEdit();
+                    loadProfiles(); // Reload profiles to show updated data
+                } else {
+                    alert('Error saving experience...');
+                }
+            } catch (error) {
+                console.error('Error saving experience:', error);
+                alert('Error saving experience', error);
+            }
+        }
+        async function saveSkills(params) {
+            console.log('Saving skills...');
+            try {
+                console.log('Saving skills try...');
+                // Save to database using module
+                const { UserProfileManager } = require('./src/modules');
+                const userProfileManager = new UserProfileManager();
+                
+                const userId = 'sample-user';
+                console.log('User ID for saving skills:', userId);
+                // Collect form data
+                const skillsData = {
+                    skills: document.getElementById('skills').value.split(',').map(skill => skill.trim())
+                };
+                
+                // Save to database using the manager
+                const success = await userProfileManager.saveUserSkills(userId, skillsData);
+                if (success) {
+                    alert('Skills saved successfully!');
+                    // Return to profile list view
+                    cancelEdit();
+                    loadProfiles(); // Reload profiles to show updated data
+                } else {
+                    alert('Error saving skills...');
+                }
+            } catch (error) {
+                console.error('Error saving skills:', error);
+                alert('Error saving skills', error);
+            }
+        }
+        
+        
 
         // Cancel editing and return to profile list
         function cancelEdit() {

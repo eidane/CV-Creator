@@ -19,6 +19,7 @@ class Database {
 
     // Initialize database
     this.db = new sqlite3.Database(this.dbPath, (err) => {
+      console.log('Database path:', this.dbPath);
       if (err) {
         console.error('Error opening database:', err);
       } else {
@@ -30,6 +31,7 @@ class Database {
 
   createTables() {
     // Create users table
+    console.log('Creating tables if they do not exist...');
     const createUserTable = `
       CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
