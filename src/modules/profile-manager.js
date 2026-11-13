@@ -61,7 +61,7 @@ class UserProfileManager {
                         const newUser = {
                             name: userData.name || 'Default User',
                             email: userData.email || '',
-                            mobile: userData.phone || '',
+                            mobile: userData.mobile || '',
                             address: userData.address || ''
                         };
                         
@@ -74,8 +74,7 @@ class UserProfileManager {
                             
                             const profileToSave = {
                                 user_id: createdUser.id,
-                                profile_data: profileData,
-                                template_used: userData.template_used || ''
+                                profile_summary: profileData,
                             };
                             
                             this.db.createProfile(profileToSave, (err, savedProfile) => {
@@ -92,8 +91,7 @@ class UserProfileManager {
                         // User exists, create a new profile
                         const profileToSave = {
                             user_id: userId,
-                            profile_data: profileData,
-                            template_used: userData.template_used || ''
+                            profile_summary: profileData,
                         };
                         
                         this.db.createProfile(profileToSave, (err, savedProfile) => {

@@ -52,7 +52,7 @@ class Database {
         profile_summary TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users (id),
+        FOREIGN KEY (user_id) REFERENCES users (id)
       )
     `;
 
@@ -233,8 +233,8 @@ class Database {
 
   // Profile operations
   createProfile(profileData, callback) {
-    const sql = 'INSERT INTO profiles (user_id, profile_data, template_used) VALUES (?, ?, ?)';
-    this.db.run(sql, [profileData.user_id, JSON.stringify(profileData.profile_data), profileData.template_used], function(err) {
+    const sql = 'INSERT INTO profiles (user_id, profile_summary) VALUES (?, ?)';
+    this.db.run(sql, [profileData.user_id, profileData.profile_summary], function(err) {
       if (err) {
         callback(err, null);
       } else {
