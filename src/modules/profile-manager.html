@@ -55,7 +55,7 @@
         async function editProfile(profileId) {
             try {
                 // Load the actual profile data from database using module
-                const { createProfileManager } = require('./src/modules');
+                const { createProfileManager } = require('./index.js');
                 const userProfileManager = createProfileManager();
                 const userId = 'sample-user';
                 
@@ -109,7 +109,7 @@
             try {
                 console.log('Saving profile try...');
                 // Save to database using module
-                const { UserProfileManager } = require('./src/modules');
+                const { UserProfileManager } = require('./index.js');
                 const userProfileManager = new UserProfileManager();
                 
                 const userId = 'sample-user';
@@ -143,7 +143,7 @@
             try {
                 console.log('Saving education try...');
                 // Save to database using module
-                const { UserProfileManager } = require('./src/modules');
+                const { UserProfileManager } = require('./index.js');
                 const userProfileManager = new UserProfileManager();
                 
                 const userId = 'sample-user';
@@ -175,7 +175,7 @@
             try {
                 console.log('Saving experience try...');
                 // Save to database using module
-                const { UserProfileManager } = require('./src/modules');
+                const { UserProfileManager } = require('./index.js');
                 const userProfileManager = new UserProfileManager();
                 
                 const userId = 'sample-user';
@@ -207,7 +207,7 @@
             try {
                 console.log('Saving skills try...');
                 // Save to database using module
-                const { UserProfileManager } = require('./src/modules');
+                const { UserProfileManager } = require('./index.js');
                 const userProfileManager = new UserProfileManager();
                 
                 const userId = 'sample-user';

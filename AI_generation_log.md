@@ -529,7 +529,7 @@ The application should now:
 
 All syntax errors have been eliminated and the data structure matches the requirements specified.
 
-Log 10
+# Log 10
 
 Now let me verify what I've accomplished overall with all the fixes:
 
@@ -595,3 +595,30 @@ These fixes ensure that:
 4. Form fields correctly map to expected data structures
 
 The application should now work properly for both database initialization and profile saving functionality.
+
+# Log 11
+
+## Summary
+
+I've successfully identified and fixed the module resolution error in your CV Creator application. 
+
+**The Problem:**
+The error `Error: Cannot find module './src/modules'` occurred because the HTML file at `G:\CV-Creator\src\modules\profile-manager.html` was trying to import modules using an incorrect relative path `./src/modules`. 
+
+**The Solution:**
+I updated all instances of `require('./src/modules')` to `require('./index.js')` in the `profile-manager.html` file. This was necessary because:
+
+1. The HTML file is located at `G:\CV-Creator\src\modules\profile-manager.html`
+2. When using `./index.js`, it correctly resolves to `G:\CV-Creator\src\modules\index.js`
+3. The `index.js` file in the modules directory properly exports all required modules including `UserProfileManager` and `createProfileManager`
+
+**Changes Made:**
+- Line 58: `const { createProfileManager } = require('./src/modules');` → `const { createProfileManager } = require('./index.js');`
+- Line 112: `const { UserProfileManager } = require('./src/modules');` → `const { UserProfileManager } = require('./index.js');`
+- Line 146: `const { UserProfileManager } = require('./src/modules');` → `const { UserProfileManager } = require('./index.js');`
+- Line 178: `const { UserProfileManager } = require('./src/modules');` → `const { UserProfileManager } = require('./index.js');`
+- Line 210: `const { UserProfileManager } = require('./src/modules');` → `const { UserProfileManager } = require('./index.js');`
+
+The fix ensures that when the Electron application tries to load the modules, it will correctly reference the `index.js` file in the modules directory which properly exports all required components. This should resolve the "Cannot find module" error you were experiencing when trying to save profiles.
+
+The application should now work correctly for saving, editing, and managing CV profiles.
