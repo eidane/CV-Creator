@@ -1,0 +1,9 @@
+{
+  "name": "cv-creator-backend",
+  "version": "0.0.1",
+  "description": "Backend services for CV Creator application",
+  "main": "src/server.js",
+  "dependencies": {
+    "sqlite3": "^5.1.6"
+  }
+}

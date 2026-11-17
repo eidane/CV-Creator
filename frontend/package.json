@@ -1,0 +1,15 @@
+{
+  "name": "cv-creator-frontend",
+  "version": "0.0.1",
+  "description": "Frontend for CV Creator application",
+  "main": "src/App.js",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "@babel/preset-react": "^7.22.0"
+  }
+}

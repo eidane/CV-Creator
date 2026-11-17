@@ -213,3 +213,234 @@ We do want the internal code to be in english but at some point we also want to 
 ## Focus on the task given
 
 Try to not deviate from the current tasking asked.
+
+
+# seperation plan
+
+# Detailed Documentation: Frontend and Backend Separation Plan for CV Creator
+
+## Project Overview
+
+This document outlines a comprehensive plan to separate frontend and backend components in your CV Creator desktop application, which is currently built with Electron.
+
+## Current Architecture Analysis
+
+Your current project structure:
+```
+cv-creator/
+├── main.js                 # Electron main process
+├── main.html               # Main UI HTML file
+├── main.css                # Global styles
+├── src/
+│   ├── modules/            # Application logic modules
+│   │   ├── profile-manager.js      # Profile management
+│   │   ├── database.js             # Database manager (proxy)
+│   │   └── index.js                # Module exports
+│   └── utils/              # Utility functions
+│       └── database.js     # Core database operations
+├── templates/              # Template files
+└── package.json            # Project dependencies
+```
+
+## Proposed Separated Architecture
+
+### Backend Structure (Server-side logic)
+```
+backend/
+├── src/
+│   ├── modules/            # Business logic modules
+│   │   ├── profile-manager.js      # Profile management logic
+│   │   ├── database.js             # Database manager (proxy to main DB)
+│   │   └── index.js                # Module exports
+│   ├── utils/              # Utility functions and classes
+│   │   └── database.js     # Core database operations
+│   └── server.js           # Backend API server (if needed)
+├── package.json            # Backend dependencies
+└── ...
+```
+
+### Frontend Structure (UI layer)
+```
+frontend/
+├── public/                 # Static assets
+│   ├── index.html          # Main HTML template
+│   ├── main.css            # Global styles
+│   └── templates/          # Template files
+├── src/                    # Source code
+│   ├── components/         # Reusable UI components
+│   ├── pages/              # Page-level components
+│   ├── services/           # API service layer
+│   ├── utils/              # Utility functions
+│   └── App.js              # Main application component
+├── package.json            # Frontend dependencies
+└── ...
+```
+
+## Files to Move and Reorganize
+
+### Backend Files:
+1. `src/modules/profile-manager.js` → `backend/src/modules/profile-manager.js`
+2. `src/modules/database.js` → `backend/src/modules/database.js`  
+3. `src/modules/index.js` → `backend/src/modules/index.js`
+4. `src/utils/database.js` → `backend/src/utils/database.js`
+
+### Frontend Files:
+1. `main.html` → `frontend/public/index.html`
+2. `main.css` → `frontend/public/main.css`
+3. All template files from `templates/` → `frontend/public/templates/`
+4. `src/modules/profile-manager.html` → `frontend/src/pages/ProfileManagerPage.js` (component-based)
+5. `src/modules/profile-manager.js` → `frontend/src/services/ProfileService.js`
+
+### Main Application Files:
+1. Keep `main.js` as the Electron main process entry point
+2. Keep `package.json` at root level for overall project management
+
+## Required Code Changes
+
+### 1. Import Path Updates
+
+**Backend Module Imports:**
+```javascript
+// Before (in src/modules/profile-manager.js)
+const Database = require('../utils/database');
+
+// After 
+const Database = require('../../backend/src/utils/database');
+```
+
+**Frontend Service Imports:**
+```javascript
+// Before (in frontend/src/pages/ProfileManagerPage.js)
+const { createProfileManager } = require('../../src/modules/index.js');
+
+// After  
+const { createProfileManager } = require('../../backend/src/modules/index.js');
+```
+
+### 2. Electron IPC Communication Setup
+
+The main Electron process (`main.js`) will need to handle communication between frontend and backend:
+
+```javascript
+// In main.js - Add IPC handlers for backend operations
+ipcMain.handle('get-profiles', async () => {
+    // Call backend service to get profiles
+    const { createProfileManager } = require('./backend/src/modules/index.js');
+    const profileManager = createProfileManager();
+    return await profileManager.getAllProfiles();
+});
+```
+
+### 3. Database Access Abstraction
+
+The database access layer needs to be properly abstracted to work across both frontend and backend:
+
+```javascript
+// In backend/src/utils/database.js
+class Database {
+    // Existing database methods remain the same
+    // But now can be used by both backend and through IPC for frontend
+}
+```
+
+### 4. API Layer Implementation (Recommended)
+
+Create a minimal API layer in the backend to serve frontend requests:
+
+```javascript
+// In backend/src/server.js
+const express = require('express');
+const app = express();
+
+// API endpoints for frontend consumption
+app.get('/api/profiles', async (req, res) => {
+    // Return profiles data
+});
+
+app.post('/api/profiles', async (req, res) => {
+    // Save profile data
+});
+```
+
+## Best Practices Implementation
+
+### 1. Separation of Concerns
+- **Backend**: All business logic, database operations, and server-side processing
+- **Frontend**: UI rendering, user interaction, and presentation layer
+- **Electron Main Process**: OS integration, window management, IPC communication
+
+### 2. Code Reusability
+- Database connection code will be shared between frontend services and backend
+- Utility functions can be moved to a shared `utils/` directory
+- Template files remain accessible to both layers
+
+### 3. Maintainability
+- Clear module boundaries make debugging easier
+- Independent testing of frontend and backend components
+- Easier scaling for future feature additions
+
+## Dependency Management
+
+### Root package.json (Main Project)
+```json
+{
+  "name": "cv-creator-desktop",
+  "version": "0.0.1",
+  "dependencies": {
+    "electron": "^31.0.0",
+    "electron-squirrel-startup": "^1.0.1",
+    "fs-extra": "^11.2.0",
+    "path": "^0.12.7",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "electron-builder": "^24.13.0"
+  }
+}
+```
+
+### Backend package.json
+```json
+{
+  "name": "cv-creator-backend",
+  "version": "0.0.1",
+  "dependencies": {
+    "sqlite3": "^5.1.6"
+  }
+}
+```
+
+### Frontend package.json
+```json
+{
+  "name": "cv-creator-frontend",
+  "version": "0.0.1",
+  "dependencies": {
+    "react": "^18.2.0", // or Vue, etc.
+    "axios": "^1.4.0"
+  }
+}
+```
+
+## Testing Strategy
+
+### Backend Testing
+- Unit tests for database operations
+- Integration tests for profile management
+- Mock database for testing without actual DB
+
+### Frontend Testing
+- Component testing for UI elements
+- Integration tests for API interactions
+- End-to-end tests for user flows
+
+## Migration Steps Summary
+
+1. **Create new directory structure** for backend and frontend
+2. **Move files** to their new locations
+3. **Update import paths** throughout the codebase
+4. **Set up IPC communication** between Electron processes
+5. **Refactor HTML components** into modern component-based architecture
+6. **Test all functionality** to ensure no regressions
+
+This separation will make your CV Creator more maintainable, scalable, and easier to develop on, while preserving all existing functionality. The approach follows good software engineering principles by clearly separating concerns between the data layer (backend) and presentation layer (frontend).

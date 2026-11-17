@@ -6,7 +6,8 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
-    "build": "electron-builder"
+    "build": "electron-builder",
+    "backend": "cd backend && node src/server.js"
   },
   "author": "CV Creator Team",
   "license": "MIT",

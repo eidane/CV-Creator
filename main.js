@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs-extra');
-const Database = require('./src/utils/database');
+const Database = require('./backend/src/utils/database');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -31,7 +31,7 @@ const createWindow = () => {
   // Load the index.html of the app.
   console.log("loading file");
   
-  mainWindow.loadFile(path.join(__dirname, 'main.html'));
+  mainWindow.loadFile(path.join(__dirname, 'frontend/public/index.html'));
 
   // Open the DevTools.
   if (process.env.NODE_ENV === 'development') {
