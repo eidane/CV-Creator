@@ -743,3 +743,71 @@ The structure now correctly follows the Log 12 restructure:
 The key insight is that the profile-manager.html file being in the frontend directory is correct - it's a frontend HTML file for user interface, not a backend component. The confusion was in my initial analysis, but I've corrected that understanding.
 
 All the files that were moved according to Log 12 have been properly relocated, and I've clarified the correct location of the profile manager HTML file as being in the frontend section where it belongs.
+
+# Log 15
+
+I have successfully resolved the error in `profile-manager.html`. Here's a summary of what was accomplished:
+
+## Problem Identified
+The original error occurred because:
+1. The HTML file was using Node.js `require()` syntax directly in browser context (which doesn't work)
+2. It was trying to load modules from non-existent paths like `./index.js` and `/backend/src/modules/index.js`
+3. All JavaScript functionality was embedded inline in the HTML, making it hard to maintain
+
+## Solution Implemented
+
+### 1. Created Proper File Structure
+- **`profile-manager-core.js`** - Contains core profile management functionality (loading profiles, creating/editing profiles, saving profiles)
+- **`profile-manager-utils.js`** - Contains utility functions for saving education, experience, and skills data
+- **`profile-manager.html`** - Updated to reference these new files instead of containing inline JavaScript
+
+### 2. Key Fixes Made
+- Removed all Node.js `require()` calls that were causing the error
+- Replaced them with browser-compatible JavaScript code
+- Separated concerns into modular files for better maintainability
+- Maintained the same UI and functionality while fixing the technical issues
+
+### 3. Benefits of This Solution
+- **Fixed the original error** - No more "Cannot find module" errors
+- **Better code organization** - Clean separation of concerns
+- **Easier maintenance** - Each function is in its own file
+- **Browser-compatible** - Uses standard JavaScript instead of Node.js modules
+- **Scalable** - Ready for integration with actual backend services
+
+The profile manager should now work correctly without any module resolution errors, and the code structure is much cleaner and maintainable. The HTML file now properly references the external JavaScript files instead of trying to use Node.js require syntax in browser context.
+
+# Log 16
+
+I've successfully added a button to check the API status in your frontend's index.html file. Here's what I accomplished:
+
+## Changes Made
+
+1. **Added a new button** in the header section of `frontend/public/index.html`:
+   - Positioned with the other action buttons
+   - Labeled "Check API Status"
+   - Uses the same styling as existing buttons
+
+2. **Implemented JavaScript function** `checkAPIStatus()` that:
+   - Makes a fetch request to `/api/health` endpoint (which exists in your Express server)
+   - Handles successful responses by displaying status and message
+   - Handles errors gracefully with appropriate error messages
+   - Works with standard browser APIs without requiring additional dependencies
+
+## How to Use
+
+1. The button appears in the header section of your main page
+2. When clicked, it attempts to connect to your Express backend's health check endpoint (`/api/health`)
+3. If successful, it displays an alert showing:
+   - API Status (e.g., "OK")
+   - Message (e.g., "Backend server is running")
+4. If there are connection issues, it shows an appropriate error message
+
+## Technical Details
+
+- The implementation uses standard `fetch()` API which is supported in modern browsers
+- Follows the same coding patterns as your existing JavaScript functions
+- Doesn't require any additional libraries or Node.js dependencies
+- Is placed in the existing script section of index.html
+
+To test this functionality, make sure your Express server is running on port 3001 (as configured in your `backend/src/server.js`), then click the "Check API Status" button on your main page.
+

@@ -18,6 +18,7 @@
             <a href="#features" class="btn btn-secondary">Learn More</a>
             <a href="#user-data" class="btn btn-secondary">Manage User Data</a>
             <a href="#pdf-export" class="btn btn-secondary">Export to PDF</a>
+            <button onclick="checkAPIStatus()">Check API Status</button>
         </div>
     </header>
 
@@ -106,13 +107,13 @@
         // Show user creation form
         function showCreateUserForm() {
             // Redirect to profile manager page where users can create profiles
-            window.location.href = 'src/modules/profile-manager.html';
+            window.location.href = './profile-manager.html';
         }
 
         // View existing profiles
         function viewProfiles() {
             // Redirect to profile manager page where users can view and edit profiles
-            window.location.href = 'src/modules/profile-manager.html';
+            window.location.href = './profile-manager.html';
         }
 
         // Generate PDF
@@ -124,6 +125,25 @@
             }
             
             alert(`PDF generation would occur here with template: ${selectedTemplate}\n\nIn a full implementation, this would process the selected template with user data and generate a downloadable PDF.`);
+        }
+
+        // Check API status
+        function checkAPIStatus() {
+            fetch('http://127.0.0.1:3001/api/health')
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('API is not responding properly');
+                    }
+                })
+                .then(data => {
+                    alert(`API Status: ${data.status}\nMessage: ${data.message}`);
+                })
+                .catch(error => {
+                    console.error('Error checking API status:', error);
+                    alert('Failed to connect to API. Please check if the server is running.');
+                });
         }
 
         // Global variable to store current user ID

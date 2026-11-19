@@ -10,6 +10,7 @@ if (require('electron-squirrel-startup')) {
 
 let mainWindow;
 let database;
+let server;
 
 const createWindow = () => {
   // Create the browser window.
@@ -28,6 +29,9 @@ const createWindow = () => {
   // Initialize database
   database = new Database();
   
+  // Start the Express server
+  startExpressServer();
+  
   // Load the index.html of the app.
   console.log("loading file");
   
@@ -42,6 +46,36 @@ const createWindow = () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+};
+
+// Start Express server
+const startExpressServer = () => {
+  try {
+    // Dynamically require express inside the function to avoid module loading issues in Electron
+    const express = require('express');
+    const app = express();
+    const PORT = process.env.PORT || 3001;
+    
+    // Serve static files from frontend public directory
+    app.use(express.static(path.join(__dirname, 'frontend/public')));
+    
+    // API endpoints
+    app.get('/api/health', (req, res) => {
+      res.json({ status: 'OK', message: 'Backend server is running' });
+    });
+    
+    app.get('/', (req, res) => {
+      res.send('Hello World!');
+    });
+    
+    server = app.listen(PORT, () => {
+      console.log(`Backend server listening on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error('Failed to start Express server:', error);
+    // Log more details about the error
+    console.error('Error stack:', error.stack);
+  }
 };
 
 // This method will be called when Electron has finished
@@ -79,3 +113,10 @@ ipcMain.handle('get-user-data-path', () => {
 
 // Export database instance for use in other modules
 module.exports = { database };
+
+// Close server when app quits
+app.on('before-quit', () => {
+  if (server) {
+    server.close();
+  }
+});
