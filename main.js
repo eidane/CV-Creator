@@ -2,6 +2,7 @@ const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const fs = require('fs-extra');
 const Database = require('./backend/src/utils/database');
+const { startServer } = require('./backend/src/server');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -30,7 +31,7 @@ const createWindow = () => {
   database = new Database();
   
   // Start the Express server
-  startExpressServer();
+  server = startServer();
   
   // Load the index.html of the app.
   console.log("loading file");
@@ -46,36 +47,6 @@ const createWindow = () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
-};
-
-// Start Express server
-const startExpressServer = () => {
-  try {
-    // Dynamically require express inside the function to avoid module loading issues in Electron
-    const express = require('express');
-    const app = express();
-    const PORT = process.env.PORT || 3001;
-    
-    // Serve static files from frontend public directory
-    app.use(express.static(path.join(__dirname, 'frontend/public')));
-    
-    // API endpoints
-    app.get('/api/health', (req, res) => {
-      res.json({ status: 'OK', message: 'Backend server is running' });
-    });
-    
-    app.get('/', (req, res) => {
-      res.send('Hello World!');
-    });
-    
-    server = app.listen(PORT, () => {
-      console.log(`Backend server listening on port ${PORT}`);
-    });
-  } catch (error) {
-    console.error('Failed to start Express server:', error);
-    // Log more details about the error
-    console.error('Error stack:', error.stack);
-  }
 };
 
 // This method will be called when Electron has finished
