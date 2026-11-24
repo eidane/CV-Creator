@@ -16,14 +16,11 @@ function createNewProfile() {
 // Edit an existing profile
 async function editProfile(profileId) {
     try {
-        // Load the actual profile data from database 
-        const userProfileManager = new UserProfileManager();
-        const userId = 'sample-user';
-        
-        // Load the actual profile data from database
-        const profileData = await userProfileManager.loadUserProfile(userId);
+        // Load the actual profile data from database using ProfileService
+        const profileService = new ProfileService();
+        const profileData = await profileService.loadProfile(profileId);
         currentProfileId = profileId;
-        showProfileEditor(profileData);
+        showProfileEditor(profileData.profile_summary || {});
     } catch (error) {
         console.error('Error editing profile:', error);
         alert('Error loading profile for editing.');
@@ -62,12 +59,9 @@ function showProfileEditor(profileData) {
 // Load profiles from database
 async function loadProfiles() {
     try {
-        // In a real implementation, this would fetch from the backend
-        const userProfileManager = new UserProfileManager();
-        const userId = 'sample-user';
-        
-        // For demo purposes, we'll simulate loading profiles
-        allProfiles = await userProfileManager.loadUserProfiles(userId);
+        // For demo purposes, we'll simulate loading profiles using API call
+        const profileService = new ProfileService();
+        allProfiles = await profileService.loadUserProfiles('sample-user');
         displayProfiles();
     } catch (error) {
         console.error('Error loading profiles:', error);
@@ -88,9 +82,9 @@ function displayProfiles() {
     allProfiles.forEach(profile => {
         html += `
             <div class="card">
-                <h3>${profile.name || 'Unnamed Profile'}</h3>
-                <p>Email: ${profile.email || 'N/A'}</p>
-                <p>Mobile: ${profile.mobile || 'N/A'}</p>
+                <h3>${profile.profile_summary?.name || 'Unnamed Profile'}</h3>
+                <p>Email: ${profile.profile_summary?.email || 'N/A'}</p>
+                <p>Mobile: ${profile.profile_summary?.mobile || 'N/A'}</p>
                 <button onclick="editProfile('${profile.id}')" class="btn btn-secondary">Edit</button>
                 <button onclick="deleteProfile('${profile.id}')" class="btn btn-danger">Delete</button>
             </div>
@@ -105,10 +99,6 @@ async function saveProfile() {
     console.log('Saving profile...');
     try {
         console.log('Saving profile try...');
-        // Save to database with api 
-        
-        const userId = 'sample-user';
-        console.log('User ID for saving profile:', userId);
         
         // Collect form data
         const profileData = {
@@ -118,9 +108,13 @@ async function saveProfile() {
             address: document.getElementById('address').value
         };
         
-        // Save to database using the manager
-        const success = true; // Simulate success for demo purposes
-        if (success) {
+        // Save to database using ProfileService - this creates/updates user with profile data
+        const profileService = new ProfileService();
+        const result = await profileService.saveUserWithProfile({
+            profile_summary: profileData
+        });
+        
+        if (result) {
             alert('Profile saved successfully!');
             // Return to profile list view
             cancelEdit();

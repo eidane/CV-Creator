@@ -19,7 +19,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // User endpoints
-app.post('/api/users', (req, res) => {
+app.post('/api/create-user', (req, res) => {
   const userData = req.body;
   database.createUser(userData, (err, user) => {
     if (err) {
@@ -29,8 +29,18 @@ app.post('/api/users', (req, res) => {
     }
   });
 });
+app.get('/api/update-user', (req, res) => {
+  const userData = req.body;
+  database.updateUser(userData, (err, user) => {
+    if (err) {
+      res.status(500).json({ error: err.message});
+    } else {
+      res.status(201).json(user);
+    }
+  })
+})
 
-app.get('/api/users', (req, res) => {
+app.get('/api/get-users', (req, res) => {
   database.getAllUsers((err, users) => {
     if (err) {
       res.status(500).json({ error: err.message });

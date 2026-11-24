@@ -216,6 +216,16 @@ class Database {
       }
     });
   }
+  updateUser(userData, callback){
+    const sql = 'UPDATE users SET name=?, email=?, mobile=?, address=? WHERE id=?'
+    this.db.run(sql, [userData.name, userData.email, userData.mobile, userData.address, userData.id], function(err) {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, { id: userData.id, ...userData });
+      }
+    });
+  }
 
   getUserById(id, callback) {
     const sql = 'SELECT * FROM users WHERE id = ?';
