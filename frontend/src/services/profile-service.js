@@ -1,29 +1,8 @@
 // Profile Service - Centralized API calls for profile management operations
 
-const PROFILE_SERVICE = {
+// Simple service to handle all API interactions with backend
+const ProfileService = {
     baseUrl: 'http://localhost:3001/api',
-
-    /**
-     * Check if user ID exists by making an API call to verify authentication
-     * @returns {Promise<boolean>} True if user is authenticated, false otherwise
-     */
-    async hasUserId() {
-        try {
-            // This would typically check with the backend to see if there's a valid session/user
-            // For now we'll just check for a simple endpoint that requires auth
-            const response = await fetch(`${this.baseUrl}/health`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-            
-            return response.ok;
-        } catch (error) {
-            console.error('Error checking user authentication:', error);
-            return false;
-        }
-    },
 
     /**
      * Save a new profile to the database
@@ -32,12 +11,51 @@ const PROFILE_SERVICE = {
      */
     async saveProfile(profileData) {
         try {
+            // First create user (if needed)
+            const userData = {
+                name: profileData.name,
+                email: profileData.email,
+                mobile: profileData.mobile,
+                address: profileData.address
+            };
+            
+            // Create the user first
+            const userResponse = await fetch(`${this.baseUrl}/create-user`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData)
+            });
+            
+            if (!userResponse.ok) {
+                throw new Error(`HTTP error! status: ${userResponse.status}`);
+            }
+            
+            const user = await userResponse.json();
+            
+            // Then save the profile with the user ID
+            const profileToSave = {
+                user_id: user.id,
+                profile_summary: {
+                    name: profileData.name,
+                    email: profileData.email,
+                    mobile: profileData.mobile,
+                    address: profileData.address,
+                    summary: profileData.summary || '',
+                    keyCompetencies: [],
+                    workExperience: [],
+                    education: [],
+                    additionalSkills: []
+                }
+            };
+            
             const response = await fetch(`${this.baseUrl}/profiles`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(profileData)
+                body: JSON.stringify(profileToSave)
             });
 
             if (!response.ok) {
@@ -147,8 +165,34 @@ const PROFILE_SERVICE = {
             console.error('Error saving skills:', error);
             throw error;
         }
+    },
+    
+    /** 
+     * Create or update a user with profile data
+     * @param {Object} profileData - Profile data to save
+     * @returns {Promise<Object>} Response from server
+     */
+    async saveUserWithProfile(profileData) {
+        try {
+            const response = await fetch(`${this.baseUrl}/create-user`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(profileData)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error saving user with profile:', error);
+            throw error;
+        }
     }
 };
 
-// Export the service
-export default PROFILE_SERVICE;
+// Export for use in other modules (in a real implementation)
+window.ProfileService = ProfileService;

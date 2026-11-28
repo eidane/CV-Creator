@@ -29,7 +29,7 @@ app.post('/api/create-user', (req, res) => {
     }
   });
 });
-app.get('/api/update-user', (req, res) => {
+app.put('/api/update-user', (req, res) => {
   const userData = req.body;
   database.updateUser(userData, (err, user) => {
     if (err) {
@@ -75,6 +75,18 @@ app.post('/api/profiles', (req, res) => {
   });
 });
 
+// Update existing profile (since we have only one user)
+app.put('/api/profiles', (req, res) => {
+  const profileData = req.body;
+  database.updateProfile(profileData, (err, profile) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.json(profile);
+    }
+  });
+});
+
 app.get('/api/profiles/:id', (req, res) => {
   const profileId = req.params.id;
   database.getProfileById(profileId, (err, profile) => {
@@ -95,6 +107,52 @@ app.get('/api/users/:userId/profiles', (req, res) => {
       res.status(500).json({ error: err.message });
     } else {
       res.json(profiles);
+    }
+  });
+});
+
+// Language endpoints
+app.post('/api/languages', (req, res) => {
+  const languageData = req.body;
+  database.createLanguage(languageData, (err, language) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.status(201).json(language);
+    }
+  });
+});
+
+app.get('/api/languages', (req, res) => {
+  database.getAllLanguages((err, languages) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.json(languages);
+    }
+  });
+});
+
+// Profile language endpoints
+app.post('/api/profiles/:profileId/languages', (req, res) => {
+  const profileId = req.params.profileId;
+  const languageId = req.body.language_id;
+  database.addLanguageToProfile(profileId, languageId, (err, result) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.status(201).json(result);
+    }
+  });
+});
+
+app.get('/api/profiles/:profileId/languages', (req, res) => {
+  const profileId = req.params.profileId;
+  database.getProfileLanguages(profileId, (err, languages) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.json(languages);
     }
   });
 });

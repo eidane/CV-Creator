@@ -50,6 +50,8 @@ class Database {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER,
         profile_summary TEXT,
+        motivation TEXT,
+        interests TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES users (id)
@@ -155,6 +157,20 @@ class Database {
       )
     `;
 
+    // Create profile_exports table - for tracking export selections
+    const createProfileExportsTable = `
+      CREATE TABLE IF NOT EXISTS profile_exports (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        profile_id INTEGER,
+        template_id INTEGER,
+        selected_fields TEXT, -- JSON array of selected field names
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (profile_id) REFERENCES profiles (id),
+        FOREIGN KEY (template_id) REFERENCES templates (id)
+      )
+    `;
+
     this.db.run(createUserTable, (err) => {
       if (err) {
         console.error('Error creating users table:', err);
@@ -202,6 +218,50 @@ class Database {
         console.error('Error creating profiles_experience table:', err);
       }
     });
+    
+    // Create languages table
+    const createLanguagesTable = `
+      CREATE TABLE IF NOT EXISTS languages (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        proficiency_level TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+
+    // Create profile_languages table
+    const createProfileLanguagesTable = `
+      CREATE TABLE IF NOT EXISTS profile_languages (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        profile_id INTEGER,
+        language_id INTEGER,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (profile_id) REFERENCES profiles (id),
+        FOREIGN KEY (language_id) REFERENCES languages (id),
+        UNIQUE (profile_id, language_id)
+      )
+    `;
+
+    // Create profile_exports table
+    this.db.run(createProfileExportsTable, (err) => {
+      if (err) {
+        console.error('Error creating profile_exports table:', err);
+      }
+    });
+
+    // Create languages tables
+    this.db.run(createLanguagesTable, (err) => {
+      if (err) {
+        console.error('Error creating languages table:', err);
+      }
+    });
+    this.db.run(createProfileLanguagesTable, (err) => {
+      if (err) {
+        console.error('Error creating profile_languages table:', err);
+      }
+    });
 
 
   }
@@ -243,8 +303,9 @@ class Database {
 
   // Profile operations
   createProfile(profileData, callback) {
-    const sql = 'INSERT INTO profiles (user_id, profile_summary) VALUES (?, ?)';
-    this.db.run(sql, [profileData.user_id, profileData.profile_summary], function(err) {
+    const sql = 'INSERT INTO profiles (user_id, profile_summary, motivation, interests) VALUES (?, ?, ?, ?)';
+    // Store profile_summary as JSON string
+    this.db.run(sql, [profileData.user_id, JSON.stringify(profileData.profile_summary), profileData.motivation, profileData.interests], function(err) {
       if (err) {
         callback(err, null);
       } else {
@@ -261,7 +322,7 @@ class Database {
       } else {
         callback(null, {
           ...row,
-          profile_data: JSON.parse(row.profile_data)
+          profile_summary: JSON.parse(row.profile_summary)
         });
       }
     });
@@ -275,9 +336,21 @@ class Database {
       } else {
         const parsedRows = rows.map(row => ({
           ...row,
-          profile_data: JSON.parse(row.profile_data)
+          profile_summary: JSON.parse(row.profile_summary)
         }));
         callback(null, parsedRows);
+      }
+    });
+  }
+
+  // Update profile with new fields
+  updateProfile(profileData, callback) {
+    const sql = 'UPDATE profiles SET profile_summary=?, motivation=?, interests=?, updated_at=CURRENT_TIMESTAMP WHERE id=?';
+    this.db.run(sql, [JSON.stringify(profileData.profile_summary), profileData.motivation, profileData.interests, profileData.id], function(err) {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, { id: profileData.id, ...profileData });
       }
     });
   }
@@ -315,6 +388,75 @@ class Database {
     // Implementation depends on the exact structure of your JSON data
     console.log('Migration from JSON data initiated:', jsonData);
     callback(null, 'Migration completed');
+  }
+
+  // Profile export operations
+  createProfileExport(profileId, templateId, selectedFields, callback) {
+    const sql = 'INSERT INTO profile_exports (profile_id, template_id, selected_fields) VALUES (?, ?, ?)';
+    this.db.run(sql, [profileId, templateId, JSON.stringify(selectedFields)], function(err) {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, { id: this.lastID, profile_id: profileId, template_id: templateId, selected_fields: selectedFields });
+      }
+    });
+  }
+
+  getProfileExports(profileId, callback) {
+    const sql = 'SELECT * FROM profile_exports WHERE profile_id = ? ORDER BY created_at DESC';
+    this.db.all(sql, [profileId], (err, rows) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        const parsedRows = rows.map(row => ({
+          ...row,
+          selected_fields: JSON.parse(row.selected_fields)
+        }));
+        callback(null, parsedRows);
+      }
+    });
+  }
+
+  // Language operations
+  createLanguage(languageData, callback) {
+    const sql = 'INSERT INTO languages (name, proficiency_level) VALUES (?, ?)';
+    this.db.run(sql, [languageData.name, languageData.proficiency_level], function(err) {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, { id: this.lastID, ...languageData });
+      }
+    });
+  }
+
+  getAllLanguages(callback) {
+    const sql = 'SELECT * FROM languages ORDER BY created_at DESC';
+    this.db.all(sql, [], (err, rows) => {
+      callback(err, rows);
+    });
+  }
+
+  // Profile language operations
+  addLanguageToProfile(profileId, languageId, callback) {
+    const sql = 'INSERT OR IGNORE INTO profile_languages (profile_id, language_id) VALUES (?, ?)';
+    this.db.run(sql, [profileId, languageId], function(err) {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, { profile_id: profileId, language_id: languageId });
+      }
+    });
+  }
+
+  getProfileLanguages(profileId, callback) {
+    const sql = `
+      SELECT l.* FROM languages l 
+      JOIN profile_languages pl ON l.id = pl.language_id 
+      WHERE pl.profile_id = ?
+    `;
+    this.db.all(sql, [profileId], (err, rows) => {
+      callback(err, rows);
+    });
   }
 
   // Close database connection
